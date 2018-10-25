@@ -1,0 +1,46 @@
+.container {
+  width: 100% !important; }
+
+.brand-name {
+  color: red !important;
+  font-size: 30px; }
+
+.navbar-inverse {
+  border-radius: 0; }
+
+.nav > li > a:hover {
+  background-color: red !important;
+  color: white !important; }
+
+.menu-items a {
+  color: red !important;
+  font-size: 18px; }
+  .menu-items a :hover {
+    color: white; }
+
+input {
+  height: 30px;
+  border-radius: 15px;
+  border-width: 1px solid #0000002e;
+  color: red;
+  font-size: 15px;
+  text-align: center;
+  margin-left: 5px;
+  color: red; }
+
+label {
+  padding: 27px;
+  font-size: 23px;
+  color: red;
+  width: 100%; }
+
+.circle-btn {
+  border-radius: 20px;
+  margin: 16px;
+  color: red;
+  background-image: none;
+  background-color: #2e2e2e !important;
+  text-shadow: none; }
+  .circle-btn:hover {
+    color: white !important;
+    background-color: red !important; }
