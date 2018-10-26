@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import NavBar from "../components/NavBar";
 import { Row,Col } from "react-bootstrap";
 import { Card } from "antd";
+import { connect } from "react-redux";
 
 import "../assets/styles/home.css";
 
@@ -27,19 +28,19 @@ class Details extends PureComponent {
                             User Name:
                         </Col>
                         <Col md={6} className="card-text">
-                            Sathish
+                            {this.props.userFirstName}
                         </Col>
                         <Col md={4} className="card-text">
                             Last Name:
                         </Col>
                         <Col md={6} className="card-text">
-                            Saminathan
+                            {this.props.userLastName}
                         </Col>
                         <Col md={4} className="card-text">
                             Email:
                         </Col>
                         <Col md={6} className="card-text">
-                            sathishcse1975@gmaill.com
+                            {this.props.email}
                         </Col>
                     </Row>
                 </Card>
@@ -48,7 +49,7 @@ class Details extends PureComponent {
                     style={{ width: 500 }}
                 >
                     <div className="tags">
-                        <span>
+                        {/* <span>
                             Tamil
                         </span>
                         <span>
@@ -59,7 +60,12 @@ class Details extends PureComponent {
                         </span>
                         <span>
                             English
-                        </span>
+                        </span> */}
+                        {this.props.selectedTags.map((e, id) =>
+                            <span>
+                                {e.language}
+                            </span>
+                        )}
                     </div>
                 </Card>
           </Row>
@@ -68,4 +74,14 @@ class Details extends PureComponent {
   }
 }
 
-export default Details;
+const mapStateToProps = (state) => {
+    debugger
+    return {
+        selectedTags : state.signUp.selectedTags,
+        userFirstName: state.signUp.userFirstName,
+        userLastName: state.signUp.userLastName,
+        email: state.signUp.email        
+    };
+};
+
+export default connect(mapStateToProps) (Details);

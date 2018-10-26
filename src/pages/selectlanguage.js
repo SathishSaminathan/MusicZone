@@ -2,24 +2,31 @@ import React, { Component } from 'react'
 import { Tag } from 'antd';
 import NavBar from "../components/NavBar";
 import { Row, Col, Button } from "react-bootstrap";
+import { connect } from "react-redux";
 
 import "../assets/styles/home.css"; 
+import { sample } from '../store/actions/signUpAction';
 
 const CheckableTag = Tag.CheckableTag;
-const tagsFromServer = ['Movies', 'Books', 'Music', 'Sports'];
+const tagsFromServer = ['Tamil', 'English', 'Kannada', 'Telugu'];
 
-class About extends Component {
+class SelectLanguage extends Component {
   state = {
     selectedTags: [],
   };
 
   handleChange(tag, checked) {
+    this.props.sample(tag);
     const { selectedTags } = this.state;
     const nextSelectedTags = checked
       ? [...selectedTags, tag]
       : selectedTags.filter(t => t !== tag);
     console.log('You are interested in: ', nextSelectedTags);
     this.setState({ selectedTags: nextSelectedTags });
+  }
+
+  renderRedirect = () => {
+    this.props.history.push("/details")
   }
 
   render() {
@@ -63,7 +70,7 @@ class About extends Component {
                   paddingLeft:10
                 }}
               >
-                Welcome<span style={{color:"white"}}>!!!</span>
+                Welcome<span style={{color:"white"}}>!!!{this.props.userFirstName}</span>
               </span>
             </div>                
               <Row>
@@ -81,7 +88,7 @@ class About extends Component {
                 ))}
               </Row>
             </div>
-            <Button className="circle-btn">Next --></Button>
+            <Button className="circle-btn" onClick={()=>{this.renderRedirect()}}>Next --></Button>
           </div>
         </div>
       </div>
@@ -89,4 +96,17 @@ class About extends Component {
   }
 }
 
-export default About;
+const mapStateToProps = (state) => {
+  debugger
+  return {
+    userFirstName : state.signUp.userFirstName
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return{
+    sample: (selectedTags) => dispatch(sample(selectedTags))
+      };
+  };
+
+export default connect(mapStateToProps,mapDispatchToProps) (SelectLanguage);
