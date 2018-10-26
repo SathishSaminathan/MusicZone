@@ -104,3 +104,32 @@ label{
     width: 40%;
     margin: 10px;
 }
+
+.tags{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    span{
+        padding: 5px;
+        background-color: red;
+        color: white;
+        width: 50%;
+        border-radius: 20px;
+        font-size: 18px;
+        border: 1px solid white;
+        margin:1px
+    }
+}
+
+.ant-card-head{
+    background-color: black;
+    .ant-card-head-title{
+        color: red;
+        font-size: 20px;
+    }
+}
+
+.card-text{
+    font-size: 20px;
+    text-align: initial   
+}
