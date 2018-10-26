@@ -2,10 +2,64 @@ import React, { Component } from 'react'
 import { Row, Col, Button } from "react-bootstrap";
 import "typeface-roboto";
 import NavBar from "../components/NavBar";
+import {FormErrors} from "../components/FormErrors";
+import { Redirect } from 'react-router-dom'
 
 import "../assets/styles/home.css";
 
 class Home extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      firstname:'',
+      lastname:'',
+      formErrors: {email: '', password: ''},
+      emailValid: false,
+      passwordValid: false,
+      formValid: false
+    }
+  }
+
+  handleUserInput (e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({[name]: value}, 
+      () => { this.validateField(name, value) });
+  }
+
+  validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.formErrors;
+    let emailValid = this.state.emailValid;
+    let passwordValid = this.state.passwordValid;
+  
+    switch(fieldName) {
+      case 'email':
+        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+        break;
+      case 'password':
+        passwordValid = value.length >= 6;
+        fieldValidationErrors.password = passwordValid ? '': ' is too short';
+        break;
+      default:
+        break;
+    }
+    this.setState({formErrors: fieldValidationErrors,
+                    emailValid: emailValid,
+                    passwordValid: passwordValid
+                  }, this.validateForm);
+  }
+  
+  validateForm() {
+    this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+  }
+
+  renderRedirect = () => {
+    return <Redirect to='/about' />
+  }
+
   render() {
     return (
       <div>
@@ -53,24 +107,54 @@ class Home extends Component {
                   <label>VISIBLE AS</label>
                 </Col>
                 <Col md={6}>
-                  <input placeholder="FIRST NAME"/>
+                  <input 
+                    name="firstname" 
+                    placeholder="FIRST NAME" 
+                    value={this.state.firstname} 
+                    onChange={(event) => this.handleUserInput(event)}
+                  />
                 </Col>
                 <Col md={6}>
-                  <input placeholder="LAST NAME"/>
+                  <input 
+                    name="lastname" 
+                    placeholder="LAST NAME" 
+                    value={this.state.lastname}
+                    onChange={(event) => this.handleUserInput(event)}
+                  />
                 </Col>
                 <Col md={12}>
                   <label>CONTACT MAIL</label>
                 </Col>
                 <Col md={12}>
-                  <input style={{ width:'90%'}} placeholder="EMAIL"/>
+                  <input 
+                    type="email" 
+                    name="email" 
+                    style={{ width:'90%'}} 
+                    placeholder="EMAIL" 
+                    value={this.state.email} 
+                    onChange={(event) => this.handleUserInput(event)}
+                  />
                 </Col>
                 <Col md={12} style={{ marginTop:10}}>
-                  <input type="password" placeholder="ENTER THE PASSWORD"/>
+                  <input 
+                    type="password" 
+                    name="password" 
+                    placeholder="ENTER THE PASSWORD" 
+                    value={this.state.password}
+                    onChange={(event) => this.handleUserInput(event)}
+                  />
                 </Col>
               </Row>
             </div>
-            <Button className="circle-btn">Next --></Button>
+            <Button 
+              className="circle-btn" 
+              disabled={!this.state.formValid}
+              onClick={()=>this.renderRedirect()}
+            >Next --></Button>
           </div>
+        </div>
+        <div className="panel panel-default">
+          <FormErrors formErrors={this.state.formErrors} />
         </div>
       </div>
     )
