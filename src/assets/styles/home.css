@@ -43,4 +43,28 @@ label {
   text-shadow: none; }
   .circle-btn:hover {
     color: white !important;
-    background-color: red !important; }
+    background-color: red !important;
+    border: 1px solid white !important; }
+
+.ant-tag-checkable {
+  border-color: red;
+  border-radius: 11px;
+  background-color: black;
+  color: red;
+  font-size: 13px; }
+
+.ant-tag-checkable-checked {
+  border-color: white;
+  border-radius: 11px;
+  background-color: red;
+  color: white;
+  font-size: 13px; }
+
+.ant-tag-checkable:not(.ant-tag-checkable-checked):hover {
+  color: white; }
+
+.ant-tag-checkable:active {
+  background-color: red; }
+
+.btn-default.focus {
+  color: red !important; }
