@@ -9,9 +9,9 @@ const Routers = () =>{
         <Router>
             <div>
                 <Switch>
-                    {/* <Route exact path="/" component={Home}/>
-                    <Route exact path="/" component={About}/> */}
-                    <Route exact path="/" component={Details}/>
+                    <Route exact path="/" component={Home}/>
+                    <Route exact path="/about" component={About}/>
+                    <Route exact path="/details" component={Details}/>
                 </Switch>
             </div>
         </Router>
