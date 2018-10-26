@@ -3,7 +3,9 @@ import { Row, Col, Button } from "react-bootstrap";
 import "typeface-roboto";
 import NavBar from "../components/NavBar";
 import {FormErrors} from "../components/FormErrors";
-import { Redirect } from 'react-router-dom'
+import { Redirect,withRouter } from 'react-router-dom'
+import { connect } from "react-redux";
+import { signUp } from "../store/actions";
 
 import "../assets/styles/home.css";
 
@@ -11,8 +13,8 @@ class Home extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: 'sathish@gmail.com',
+      password: '12345678',
       firstname:'',
       lastname:'',
       formErrors: {email: '', password: ''},
@@ -57,7 +59,7 @@ class Home extends Component {
   }
 
   renderRedirect = () => {
-    return <Redirect to='/about' />
+    this.props.history.push("/selectlanguage")
   }
 
   render() {
@@ -149,7 +151,7 @@ class Home extends Component {
             <Button 
               className="circle-btn" 
               disabled={!this.state.formValid}
-              onClick={()=>this.renderRedirect()}
+              onClick={()=>{this.props.signUp(this.state.firstname,this.state.lastname,this.state.email);this.renderRedirect()}}
             >Next --></Button>
           </div>
         </div>
@@ -161,4 +163,10 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapDispatchToProps = dispatch => {
+  return{
+          signUp: (firstname, lastname,email ) => dispatch(signUp(firstname,lastname,email))
+      };
+  };
+
+export default connect(null,mapDispatchToProps) (Home);
